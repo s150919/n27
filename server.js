@@ -1,3 +1,13 @@
+class Konto {
+    constructor(){
+        this.Kontonummer
+        this.Kontoart
+    }
+}
+
+
+
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
@@ -25,12 +35,17 @@ app.get('/',(req, res, next) => {
     }
 })
 
+// Wenn die Seite localhost:3000/impressum aufgerufen wird, ...
+
 app.get('/impressum',(req, res, next) => {   
 
     let idKunde = req.cookies['istAngemeldetAls']
     
     if(idKunde){
         console.log("Kunde ist angemeldet als " + idKunde)
+        
+        // ... dann wird impressum.ejs gerendert.
+        
         res.render('impressum.ejs', {                              
         })
     }else{
@@ -53,12 +68,61 @@ app.post('/',(req, res, next) => {
     if(idKunde === "4711" && kennwort === "123"){            
         console.log("Der Cookie wird gesetzt:")
         res.cookie('istAngemeldetAls', idKunde)
-        res.render('index.ejs', {           
+        res.render('index.ejs', {  
+            kunde : idKunde          
         })
     }else{            
         console.log("Der Cookie wird gelöscht")
         res.cookie('istAngemeldetAls','')
         res.render('login.ejs', {                    
         })
+    }
+})
+
+// Wenn die Seite localhost:3000/kontoAnlegen angesurft wird, ...
+
+app.get('/kontoAnlegen',(req, res, next) => {   
+
+    let idKunde = req.cookies['istAngemeldetAls']
+    
+    if(idKunde){
+        console.log("Kunde ist angemeldet als " + idKunde)
+        
+        // ... dann wird kontoAnlegen.ejs gerendert.
+        
+        res.render('kontoAnlegen.ejs', {  
+            meldung : ""                            
+        })
+    }else{
+        res.render('login.ejs', {                    
+        })    
+    }
+})
+
+// Wenn der Button auf der kontoanlegen-Seite gedrückt wird, ...
+
+app.post('/kontoAnlegen',(req, res, next) => {   
+
+    let idKunde = req.cookies['istAngemeldetAls']
+    
+    if(idKunde){
+
+        let konto = new Konto()
+        konto.Kontonummer = req.body.kontonummer
+        konto.Kontoart = req.body.kontoart
+        
+        console.log(konto.Kontoart)
+
+
+        console.log("Kunde ist angemeldet als " + idKunde)
+        
+        // ... dann wird kontoAnlegen.ejs gerendert.
+        
+        res.render('kontoAnlegen.ejs', {      
+            meldung : "Das Konto " + konto.Kontonummer + " der Art " +  konto.Kontoart +  " wurde erfolgreich angelegt."                        
+        })
+    }else{
+        res.render('login.ejs', {                    
+        })    
     }
 })

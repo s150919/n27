@@ -2,10 +2,10 @@
 
 ## 20190225
 
-*Heroku konfiguriert
+* heroku konfiguriert
 
 ## 20190218
 
 * Favicon eingebaut
-* Login ausprogrammiert
+* login ausprogrammiert
 * npm-Module installiert
