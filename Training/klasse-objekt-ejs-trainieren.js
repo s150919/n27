@@ -23,6 +23,15 @@ class Rechteck{
     }
 }
 
+class Macbook{
+    constructor(){
+        this.prozessor  
+        this.betriebssystem
+        this.display
+        this.grafik
+    }
+}
+
 // Klassendefinition für Schüler in einer Schule:
 
 class Schueler{
@@ -58,6 +67,9 @@ let rechteck = new Rechteck()
 let schueler = new Schueler()
 let fussballer = new Fussballer()
 
+let macbook = new Macbook()
+
+
 
 // 3. Initialisierung (Konkrete Eingeschaftswerte werden zugewiesen)
 
@@ -73,6 +85,11 @@ fussballer.vorname = "Firke"
 console.log("Länge: " + rechteck.laenge)
 console.log("Breite: " + rechteck.breite)
 
+macbook.prozessor = "Intel Core i5 8th 2,3 GHz"
+macbook.betriebssystem = "MacOS Mojave "
+macbook.display = "13,3 Zoll 2560 x 1600"
+macbook.grafik = "Intel Iris Plus Graphics 640"
+
 
 // Wenn localhost:3000/klasse-objekt-ejs-trainieren aufgerufen wird ...
 
@@ -81,11 +98,11 @@ app.get('/klasse-objekt-ejs-trainieren',(req, res, next) => {
     // ... wird klasse-objekt-ejs-trainieren.ejs gerendert:
 
     res.render('klasse-objekt-ejs-trainieren', {                                      
-        breite : rechteck.breite,
-        laenge : rechteck.laenge,
-        geschlecht : schueler.geschlecht,
-        alter : schueler.alter,
-        vorname : fussballer.vorname,
-        mannschaft : fussballer.mannschaft
+
+
+        prozessor : macbook.prozessor,
+        betriebssystemM: macbook.betriebssystem,
+        display : macbook.display,
+        grafik : macbook.grafik
     })
 })
