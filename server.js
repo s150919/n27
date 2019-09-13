@@ -16,7 +16,8 @@ class Kunde {
         this.Geburtsdatum
         this.Nachname
         this.Adresse
-        this.Geschlecht        
+        this.Geschlecht   
+        this.Mail     
     }
 }
 
@@ -32,6 +33,7 @@ kunde.Geburtsdatum = "1999-12-31"
 kunde.Nachname = "Müller"
 kunde.Vorname = "Hildegard"
 kunde.Geschlecht = "w"
+kunde.Mail = "h.mueller@web.de"
 
 const iban = require('iban')
 const express = require('express')
@@ -196,12 +198,29 @@ app.post('/stammdatenPflegen',(req, res, next) => {
     
     if(idKunde){
         console.log("Kunde ist angemeldet als " + idKunde)
-        
+
+        // Nur wenn das Input namens Nachnahme nicht leer ist, wird der Nachnahme neu gesetzt
+
+
+        if(kunde.Nachname = req.body.nachname){
+            kunde.Nachname = req.body.nachname
+        }
+
+        if(kunde.Kennwort = req.body.kennwort){
+            kunde.Kennwort = req.body.kennwort
+        }
+
+        if(kunde.Mail = req.body.email){
+            kunde.Mail = req.body.email
+        }
         kunde.Nachname = req.body.nachname
         kunde.Kennwort = req.body.kennwort
+        kunde.Mail = req.body.email
+
+
         
         res.render('stammdatenPflegen.ejs', {                              
-            meldung : "Die Stammdaten wurden geändert."
+            meldung : "Die Stammdaten wurden geändert.  Neue Mail: " + kunde.Mail + "Neuer Nachnahme: " + kunde.Nachname
         })
     }else{
         // Die login.ejs wird gerendert 
