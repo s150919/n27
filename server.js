@@ -56,6 +56,13 @@ dbVerbindung.connect(function(fehler){
     })
 })
 
+bVerbindung.connect(function(fehler){
+    dbVerbindung.query('CREATE TABLE IF NOT EXISTS kontobewegung(iban VARCHAR(22), betrag DECIMAL(15,2), verwendungszweck VARCHAR(20) ;',function (fehler) {
+        if (fehler) throw fehler
+        console.log('Die Tabelle konto wurde erfolgreich angelegt.')
+    })
+})
+
 const app = express()
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
@@ -250,3 +257,47 @@ app.post('/stammdatenPflegen',(req, res, next) => {
     }
 })
 
+app.get('/ueberweisen',(req, res, next) => {   
+
+    let idKunde = req.cookies['istAngemeldetAls']
+    
+    if(idKunde){
+        console.log("Kunde ist angemeldet als " + idKunde)
+        
+    
+        
+        res.render('ueberweisen.ejs', {    
+            meldung : ""                          
+        })
+    }else{
+        res.render('login.ejs', {                    
+        })    
+    }
+})
+
+app.post('/ueberweisen',(req, res, next) => {   
+
+    let idKunde = req.cookies['istAngemeldetAls']
+    
+    if(idKunde){
+        console.log("Kunde ist angemeldet als " + idKunde)
+        
+        dbVerbindung.query('INSERT INTO kontobewegung(iban,betrag,verwendungszweck) VALUES ("' + konto.Iban + '",100,"' + konto.Kontoart + '",NOW());', function (fehler) {
+            if (fehler) throw fehler;
+            console.log('Das Konto wurde erfolgreich angelegt');
+        });
+         
+       
+       
+
+        res.render('ueberweisen.ejs', {                              
+            meldung : "Die Überweisung wurde erfolgreich ausgeführt."
+        })
+    }else{
+        // Die login.ejs wird gerendert 
+        // und als Response
+        // an den Browser übergeben.
+        res.render('login.ejs', {                    
+        })    
+    }
+})
