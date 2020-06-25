@@ -6,10 +6,11 @@
   "dependencies": {
     "cookie-parser": "^1.4.4",
     "ejs": "^2.6.1",
+    "email-validator": "^2.0.4",
     "express": "^4.16.4",
     "iban": "0.0.12",
-    "mysql": "^2.17.1",
-    "nodemon": "^1.18.10"
+    "mysql": "^2.18.1",
+    "nodemon": "^1.19.2"
   },
   "devDependencies": {},
   "scripts": {
